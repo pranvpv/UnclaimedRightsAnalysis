@@ -45,6 +45,17 @@ The project demonstrates a complete data workflow — from large-scale data hand
 - The task began by locating all ISRCs of songs by The Weeknd in the given `unclaimedmusicalworkrightshares.tsv` file.  
 - Upon loading, the file (≈6 GB) was found to be too large to process at once, so it was read in chunks of 100,000 rows using pandas.  
 - This loop-based chunk processing allowed smooth and memory-efficient filtering of data.
+```python
+import pandas as pd
+
+filename= r"C:\Users\prana\Downloads\unclaimedmusicalworkrightshares.tsv"
+search_value= "THE WEEKND"
+code=[]
+chunksize = 100000 
+for chunk in pd.read_csv(filename, sep='\t',usecols=["DisplayArtistName", "ISRC"], chunksize=chunksize):
+
+    matches=chunk[chunk["DisplayArtistName"]=="THE WEEKND"]
+```
 
 ### 2. Data Cleaning and Deduplication
 - After filtering, more than 10,000 ISRCs associated with The Weeknd were found.  
@@ -55,10 +66,39 @@ The project demonstrates a complete data workflow — from large-scale data hand
 - Using the client credentials, an access token was generated and used to access the Spotify Web API.  
 - The API was used to retrieve relevant information such as song names, album titles, and release dates.
 
+```python
+client_id = "7f03f7eeb9fd49d382dade584bbb3a98"
+client_secret = "96987357ea524cabaffca7ab7885694b"
+
+# Encode credentials
+auth_str = f"{client_id}:{client_secret}"
+b64_auth_str = base64.b64encode(auth_str.encode()).decode()
+
+# Request access token
+token_url = "https://accounts.spotify.com/api/token"
+response = requests.post(token_url, 
+    data={"grant_type": "client_credentials"},
+    headers={"Authorization": f"Basic {b64_auth_str}"}
+)
+
+access_token = response.json()["access_token"]
+```
+
 ### 4. Cross-Matching
 - Using Python, ISRCs obtained from Spotify were compared with those filtered from the unclaimed dataset.  
 - Common ISRCs were extracted to find which Spotify-verified recordings also appeared unclaimed in the given TSV file.  
 - This revealed patterns in metadata mismatches and missing ownership claims.
+```python
+import pandas as pd
+# Your TSV data file
+filename = r"C:\Users\prana\OneDrive\Desktop\unclaimed.csv"
+
+# CSV that contains one column listing column names
+columns_file = r"C:\Users\prana\Downloads\star2.csv"
+
+# Read the single-column CSV and convert it into a list
+use_columns = pd.read_csv(columns_file, header=None).iloc[:, 0].dropna().tolist()
+```
 
 ---
 
@@ -75,10 +115,8 @@ The project demonstrates a complete data workflow — from large-scale data hand
 ---
 
 ## Insights
-- Many unclaimed works are alternate versions (remix/live/cover) not properly linked to their main composition.  
-- Metadata mismatches between ISRC and ISWC codes cause rights to remain unclaimed.  
-- Even major label releases (USUG/USUM prefixes) can appear unclaimed, revealing data synchronization issues.  
-- Regional releases (FR3Z, ITQ, CAHQJ prefixes) indicate international catalog fragmentation.  
+- Many unclaimed works are alternate versions (remix/live/cover) not properly linked to their main composition.    
+- Even major label releases (USUG/USUM prefixes) can appear unclaimed, revealing data synchronization issues.   
 - Some entries might be false positives due to automated tagging or duplicate data.
 
 ---
