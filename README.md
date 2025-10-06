@@ -67,8 +67,8 @@ for chunk in pd.read_csv(filename, sep='\t',usecols=["DisplayArtistName", "ISRC"
 - The API was used to retrieve relevant information such as song names, album titles, and release dates.
 
 ```python
-client_id = "7f03f7eeb9fd49d382dade584bbb3a98"
-client_secret = "96987357ea524cabaffca7ab7885694b"
+client_id = "*******************"
+client_secret = "********************"
 
 # Encode credentials
 auth_str = f"{client_id}:{client_secret}"
