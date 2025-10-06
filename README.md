@@ -106,7 +106,7 @@ use_columns = pd.read_csv(columns_file, header=None).iloc[:, 0].dropna().tolist(
 1. a) From the given `unclaimedmusicalworkrightshares.tsv` file, 375 ISRCs belonging to The Weeknd were obtained.  
    b) The number of songs retrieved through Spotify API web scraping was 355, which is slightly lower compared to the unclaimed rights dataset.  
    c) This difference is assumed to be caused by the presence of remixes, alternate versions, live performances, and collaborative tracks in the unclaimed rights data that do not appear as individual releases on Spotify.  
-   d) During manual verification, a few ISRCs could not be found in any public databases (Spotify, Discogs, or MusicBrainz), possibly indicating internal label versions or unreleased works.  
+   d) During manual verification, a few ISRCs could not be found in any public databases, possibly indicating internal label versions or unreleased works.  
 
 2. Out of the 355 songs of The Weeknd obtained through Spotify web scraping, 144 songs matched with entries from the `unclaimedmusicalworkrightshares.tsv` dataset.  
 
