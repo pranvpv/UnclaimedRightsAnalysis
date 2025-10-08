@@ -122,9 +122,10 @@ use_columns = pd.read_csv(columns_file, header=None).iloc[:, 0].dropna().tolist(
 ---
 
 ## Assumptions
-1. The dataset represents recording-level (ISRC) data rather than composition rights (ISWC).  
-2. “Unclaimed” indicates missing publisher or songwriter linkage.  
-3. Multiple ISRCs may refer to the same song released in different territories.  
-4. Some entries may already be claimed after dataset publication due to time lag in updates.  
+1. The dataset represents recording-level (ISRC) data rather than composition rights (ISWC).
+2. ISRC (International Standard Recording Code) identifies individual sound recordings or performances, while ISWC (International Standard Musical Work Code) refers to the underlying musical composition or songwriting itself.
+3. “Unclaimed” indicates missing publisher or songwriter linkage.  
+4. Multiple ISRCs may refer to the same song released in different territories.  
+5. Some entries may already be claimed after dataset publication due to time lag in updates.  
 
 
